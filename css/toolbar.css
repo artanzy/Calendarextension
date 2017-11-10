@@ -1,0 +1,99 @@
+.search-header {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.search-header label {
+  font-size: 16px;
+  color: black;
+  margin-left: 10px;
+}
+
+.room-cardbox-wrapper {
+  border-top: 1px solid #ececec;
+}
+
+.room-cardbox-wrapper:not(:last-child) {
+  padding-bottom: 20px;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper img {
+  margin: auto;
+  width: 100%;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper img {
+  margin: auto;
+  width: 100%;
+}
+
+.room-content .room-name {
+  color: black;
+  font-weight: bold;
+  font-size: 28px;
+  margin-left: -10px;
+}
+
+.room-content .room-status {
+  float: right;
+  font-size: 22px;
+  font-weight: bold;
+  margin-right: -10px;
+}
+
+.room-content .room-status.status-warning {
+  color: #eb7904;
+}
+
+.room-content .room-status.status-warning .status-detail {
+  text-decoration: underline;
+}
+
+.room-content .room-status.status-accept {
+  color: #85bc00;
+}
+
+.room-content .room-description p, .room-content .room-description span {
+  font-size: 16px;
+  color: black;
+}
+
+.room-content .room-description .icon {
+  width: 20px;
+  margin-right: 10px;
+  float: left;
+}
+
+.room-content .room-description .icon i {
+  margin-left: 5px;
+  color: #233A76;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.room-cardbox-wrapper .card-box .room-image-wrapper img {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.panel-body p {
+  font-size: 14px;
+}
+
+.time-date p {
+  color: black;
+}

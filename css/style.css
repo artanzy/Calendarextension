@@ -1,0 +1,21 @@
+#myOwnCustomToolbar12345 {
+    background: white;
+    height: 100%;
+    width: 550px;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    overflow-y: auto;
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-color: black;
+}
+
+#myButton12345 {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

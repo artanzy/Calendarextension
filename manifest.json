@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "Getting started example",
+  "description": "Extension for google calendar",
+  "version": "1.0",
+
+  "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+  },
+  "background": {
+      "scripts": ["background.js"]
+  },
+  "content_scripts":[
+      {
+        "matches": ["http://*.google.com/calendar/render*","https://*.google.com/calendar/render*"],
+        "css": ["/css/style.css","/assets/angular/angular-material.css","/assets/bootstrap/css/bootstrap.css",
+                "/assets/bootstrap/css/bootstrap.min.css","/assets/typicon/typicons.css","/css/toolbar.css"],
+        "js": ["jquery.js","content.js","/assets/angular/angular.js",
+              "/assets/angular/angular-route.js","/assets/angular/angular-animate.js",
+              "/assets/angular/angular-aria.js","/assets/angular/angular-material.js",
+              "/assets/angular/ng-file-upload.min.js","/assets/moment-with-locales.js",
+              "/assets/moment-round.js","/assets/js-core/jquery-core.js",
+              "/assets/js-core/jquery-ui-core.js","/assets/js-core/jquery-ui-widget.js",
+              "/assets/js-core/jquery-ui-mouse.js","/assets/js-core/jquery-ui-position.js",
+              "/assets/js-core/jquery-cookie.js","/assets/bootstrap/js/bootstrap.min.js",
+              "/assets/bootstrap/js/bootstrap-datetimepicker.js",
+              "/app/app.js","/service/services.js","/controller/controllers.js"]
+      }
+  ],
+  "permissions": [
+      "https://www.google.com/",
+      "tabs",
+      "activeTab"
+  ],
+  "web_accessible_resources": [
+      "content.js",
+      "toolbar.html",
+      "style.css"
+  ]
+}
