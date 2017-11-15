@@ -1,0 +1,30 @@
+#input-field-wrapper{
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#input-field-wrapper div{
+  text-align: left;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+#submit-button{
+  margin-bottom: 8px;
+  margin-top: 13px;
+  background: #005B99;
+  color: white;
+  width: 80px;
+  height: 40px;
+}
+
+#error-message{
+  color: red;
+}

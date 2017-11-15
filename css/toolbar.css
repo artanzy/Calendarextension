@@ -1,3 +1,9 @@
+#logout_button{
+  float: right;
+  background-color: #8B0000;
+  color: white;
+}
+
 .search-header {
   margin-bottom: 10px;
   margin-left: 10px;

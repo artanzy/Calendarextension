@@ -13,6 +13,7 @@
     <script src="/assets/angular/angular-aria.js"></script>
     <script src="/assets/angular/angular-material.js"></script>
     <script src="/assets/angular/angular-route.js"></script>
+    <script src="/assets/angular/angular-cookies.js"></script>
     <script src="/assets/angular/ng-file-upload.min.js"></script>
     <script src="/assets/moment-with-locales.js"></script>
     <script src="/assets/moment-round.js"></script>
@@ -32,12 +33,14 @@
     <title>Hello World!</title>
     <style>
         body {
+           background-color: white;
            color: white;
         }
     </style>
 </head>
 <body ng-controller="roomsController">
     <button id="toggle_button">Toggle</button>
+    <button ng-click="logout()" id="logout_button">Logout</button>
     <div class="time-date">
         <p class="col-xs-3" id="startDate"></p>
         <p class="col-xs-3" id="startTime"></p>

@@ -1,4 +1,4 @@
-RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,roomServices) {
+RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,$window ,$cookies ,roomServices) {
     console.log("Roomcontroller called");
     $scope.nameFilter = null;
     $scope.roomsList = [];
@@ -10,7 +10,9 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     $scope.building = "";
     $scope.floor = "";
     $scope.startDate = "";
-
+    $scope.username = "";
+    $scope.password = "";
+    $scope.errorMessage = "";
 
     $scope.getRooms = function(){
         roomServices.getRooms().then(function(response){
@@ -23,112 +25,28 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
 
     $scope.getRooms();
 
-    $scope.showcreateRoom = function(event){
-        $mdDialog.show({
-          controller: DialogController,
-          templateUrl: '/dialog/createroomdialog.html',
-          parent: angular.element(document.body),
-          clickOutsideToClose: true,
-          scope: $scope,
-          preserveScope: true,
-          fullscreen: true // Only for -xs, -sm breakpoints.
+    $scope.checkCookies = function(){
+        var token = $cookies['token'];
+        console.log(token);
+        if(token === "login success"){
+            console.log("already have cookies");
+            $window.location.href = 'toolbar.html';
+        }
+    }
+
+    $scope.login = function(){
+        roomServices.postLogin($scope).success(function(response){
+            console.log(response);
+            $cookies['token'] = response;
+            $window.location.href = 'toolbar.html';
+        }).error(function(error){
+            $scope.errorMessage = "login failed wrong username or password";
         });
     }
 
-    function DialogController($scope, $mdDialog) {
-      $scope.cancel = function() {
-          $mdDialog.cancel();
-      };
-      $scope.hide = function() {
-          $mdDialog.hide();
-      };
+    $scope.logout = function(){
+        $cookies['token'] = undefined;
+        $window.location.href = 'login.html';
     }
-
-    $scope.createRoom = function(){
-    roomServices.createRoom($scope).then(function successCallback(response){
-        console.log("create room success");
-        $scope.getRooms();
-        $scope.cancel();
-        $scope.clearRoomForm();
-      });
-    }
-
-    $scope.clearRoomForm = function(){
-      $scope.id = "";
-      $scope.name = "";
-      $scope.capacity = "";
-      $scope.building = "";
-      $scope.floor = "";
-    }
-
-    $scope.readOne = function(id){
-
-      roomServices.readOne(id).then(function successCallback(response){
-
-        $scope.id = response.data._id;
-        $scope.name = response.data.roomName;
-        $scope.imgPath = response.data.roomImage;
-        $scope.capacity = response.data.roomCapacity;
-        $scope.building = response.data.buildingName;
-        $scope.floor = response.data.floor;
-
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/dialog/readroomdialog.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true,
-            scope: $scope,
-            preserveScope: true,
-            fullscreen: true
-        }).then(
-            function(){},
-
-            // user clicked 'Cancel'
-            function() {
-                // clear modal content
-                $scope.clearRoomForm();
-            }
-        );
-
-      }, function errorCallback(response){
-          $scope.showToast("Unable to retrieve record.");
-      });
-
-  }
-
-  $scope.updateRoom = function(){
-      roomServices.updateRoom($scope).then(function successCallback(response){
-          $scope.getRooms();
-          $scope.cancel();
-          $scope.clearRoomForm();
-      });
-  }
-
-  $scope.confirmDeleteRoom = function(id){
-
-      $scope.id = id;
-
-      var confirm = $mdDialog.confirm()
-          .title('Are you sure?')
-          .textContent('Room will be deleted.')
-          .ok('Yes')
-          .cancel('No');
-
-      $mdDialog.show(confirm).then(
-          function() {
-              $scope.deleteRoom();
-          },
-
-          function() {
-          }
-      );
-  }
-
-  $scope.deleteRoom = function(){
-      roomServices.deleteRoom($scope.id).then(function successCallback(response){
-          $scope.getRooms();
-      });
-  }
-
 
 });
