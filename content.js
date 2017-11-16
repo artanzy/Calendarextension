@@ -18,40 +18,62 @@ function toggle(){
     }
 }
 
-window.addEventListener("click",(function (){
-  console.log($("input[id$='-sd']").val());
-  chrome.runtime.sendMessage({method: "startDate",param:$("input[id$='-sd']").val()});
-  console.log($("input[id$='-st']").val());
-  chrome.runtime.sendMessage({method: "startTime",param:$("input[id$='-st']").val()});
-  console.log($("input[id$='-et']").val());
-  chrome.runtime.sendMessage({method: "endTime",param:$("input[id$='-et']").val()});
-  console.log($("input[id$='-ed']").val());
-  chrome.runtime.sendMessage({method: "endDate",param:$("input[id$='-ed']").val()});
-}),true);
+// window.addEventListener("click",(function (){
+//     sendValueMessages();
+// }),true);
+
+function sendValueMessages(){
+    console.log($("input[id$='-sd']").val());
+    chrome.runtime.sendMessage({method: "startDate",param:$("input[id$='-sd']").val()});
+    console.log($("input[id$='-st']").val());
+    chrome.runtime.sendMessage({method: "startTime",param:$("input[id$='-st']").val()});
+    console.log($("input[id$='-et']").val());
+    chrome.runtime.sendMessage({method: "endTime",param:$("input[id$='-et']").val()});
+    console.log($("input[id$='-ed']").val());
+    chrome.runtime.sendMessage({method: "endDate",param:$("input[id$='-ed']").val()});
+}
+
 
 var url = chrome.extension.getURL('login.html');
 var button = "<button id='myButton12345'>Toggle</button>"
 var iframe = "<iframe id='myOwnCustomToolbar12345' src="+url+"></iframe>"
 
+$("#maincell").append(button);
+$("#maincell").append(iframe);
+
+document.getElementById('myButton12345').addEventListener('click', toggle);
+
 function hashCheck(){
-    if(window.location.hash === "#eventpage_6"){
-        $("#maincell").append(button);
-        $("#maincell").append(iframe);
-        document.getElementById('myButton12345').addEventListener('click', toggle);
+    if(window.location.hash === "#eventpage_6" && $("input[id$='-sd']").val() !== undefined){
+        $("#myButton12345").show();
+        $("#myOwnCustomToolbar12345").show();
     }
     else{
-        $("#maincell").hide($("#myButton12345"));
-        $("#maincell").hide($("#myOwnCustomToolbar12345"));
+        $("#myButton12345").hide();
+        $("#myOwnCustomToolbar12345").hide();
     }
 }
 
-$(".goog-inline-block").click(function(){
-    document.onload = function(){
-      $("#maincell").append(button);
-      $("#maincell").append(iframe);
-      document.getElementById('myButton12345').addEventListener('click', toggle);
+$("#maincell").on("DOMSubtreeModified", function(){
+    if($("input[id$='-sd']").val() !== undefined){
+        $("#myButton12345").show();
+        $("#myOwnCustomToolbar12345").show();
+        // sendValueMessages();
+    }
+    else{
+        $("#myButton12345").hide();
+        $("#myOwnCustomToolbar12345").hide();
     }
 });
 
-window.onload = hashCheck();
+window.addEventListener("hashchange",function(){
+    hashCheck();
+    $("input[id$='-sd']").change(sendValueMessages);
+    $("input[id$='-et']").change(sendValueMessages);
+});
 hashCheck();
+
+// $("input[id$='-sd']").change(sendValueMessages);
+$(".dr-time").change(sendValueMessages);
+// $("input[id$='-ed']").change(sendValueMessages);
+// $("input[id$='-et']").change(sendValueMessages);

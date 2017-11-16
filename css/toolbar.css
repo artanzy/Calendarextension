@@ -1,5 +1,8 @@
-#logout_button{
+.user-wrapper{
   float: right;
+}
+
+#logout_button{
   background-color: #8B0000;
   color: white;
 }

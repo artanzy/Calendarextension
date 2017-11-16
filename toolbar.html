@@ -38,9 +38,12 @@
         }
     </style>
 </head>
-<body ng-controller="roomsController">
+<body ng-controller="roomsController" bgcolor="white">
     <button id="toggle_button">Toggle</button>
-    <button ng-click="logout()" id="logout_button">Logout</button>
+    <div class="user-wrapper">
+      <div class="user-name">{{username}}</div>
+      <button ng-click="logout()" id="logout_button">Logout</button>
+    </div>
     <div class="time-date">
         <p class="col-xs-3" id="startDate"></p>
         <p class="col-xs-3" id="startTime"></p>
