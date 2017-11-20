@@ -1,15 +1,9 @@
-RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,$window ,$cookies ,roomServices) {
+RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,$location ,$window ,$cookies ,roomServices) {
     console.log("Roomcontroller called");
     $scope.nameFilter = null;
     $scope.roomsList = [];
-    $scope.id = "";
-    $scope.name = "";
-    $scope.imageFile = "";
+    $scope.bgImg = "/assets/images/bg.jpg";
     $scope.imgPath = "/assets/images/no_image.png";
-    $scope.capacity = "";
-    $scope.building = "";
-    $scope.floor = "";
-    $scope.startDate = "";
     $scope.username = "";
     $scope.password = "";
     $scope.errorMessage = "";
@@ -30,7 +24,7 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         console.log(token);
         if(token === "login success"){
             console.log("already have cookies");
-            $window.location.href = 'toolbar.html';
+            window.location.href = "#/home";
         }
     }
 
@@ -38,7 +32,8 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         roomServices.postLogin($scope).success(function(response){
             console.log(response);
             $cookies['token'] = response;
-            $window.location.href = 'toolbar.html';
+            console.log($location.path());
+            window.location.href = "#/home";
         }).error(function(error){
             $scope.errorMessage = "login failed wrong username or password";
         });
@@ -46,7 +41,7 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
 
     $scope.logout = function(){
         $cookies['token'] = undefined;
-        $window.location.href = 'login.html';
+        window.location.href = "#/login";
     }
 
 });

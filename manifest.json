@@ -35,8 +35,7 @@
   ],
   "web_accessible_resources": [
       "content.js",
-      "toolbar.html",
-      "login.html",
+      "index.html",
       "style.css"
   ]
 }

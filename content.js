@@ -18,23 +18,19 @@ function toggle(){
     }
 }
 
-// window.addEventListener("click",(function (){
-//     sendValueMessages();
-// }),true);
-
-function sendValueMessages(){
-    console.log($("input[id$='-sd']").val());
+setInterval(function sendValueMessages(){
+    // console.log($("input[id$='-sd']").val());
     chrome.runtime.sendMessage({method: "startDate",param:$("input[id$='-sd']").val()});
-    console.log($("input[id$='-st']").val());
+    // console.log($("input[id$='-st']").val());
     chrome.runtime.sendMessage({method: "startTime",param:$("input[id$='-st']").val()});
-    console.log($("input[id$='-et']").val());
+    // console.log($("input[id$='-et']").val());
     chrome.runtime.sendMessage({method: "endTime",param:$("input[id$='-et']").val()});
-    console.log($("input[id$='-ed']").val());
+    // console.log($("input[id$='-ed']").val());
     chrome.runtime.sendMessage({method: "endDate",param:$("input[id$='-ed']").val()});
-}
+},500);
 
 
-var url = chrome.extension.getURL('login.html');
+var url = chrome.extension.getURL('index.html');
 var button = "<button id='myButton12345'>Toggle</button>"
 var iframe = "<iframe id='myOwnCustomToolbar12345' src="+url+"></iframe>"
 
@@ -58,7 +54,6 @@ $("#maincell").on("DOMSubtreeModified", function(){
     if($("input[id$='-sd']").val() !== undefined){
         $("#myButton12345").show();
         $("#myOwnCustomToolbar12345").show();
-        // sendValueMessages();
     }
     else{
         $("#myButton12345").hide();
@@ -68,12 +63,5 @@ $("#maincell").on("DOMSubtreeModified", function(){
 
 window.addEventListener("hashchange",function(){
     hashCheck();
-    $("input[id$='-sd']").change(sendValueMessages);
-    $("input[id$='-et']").change(sendValueMessages);
 });
 hashCheck();
-
-// $("input[id$='-sd']").change(sendValueMessages);
-$(".dr-time").change(sendValueMessages);
-// $("input[id$='-ed']").change(sendValueMessages);
-// $("input[id$='-et']").change(sendValueMessages);
