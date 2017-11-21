@@ -5,11 +5,12 @@
     <title>Login</title>
   </head>
   <body ng-controller="roomsController">
+    <button id="toggle_button" ng-click="toggle()">Toggle</button>
     <form ng-submit="login()" class="col-xs-10" id="input-field-wrapper">
     <h3>Login</h3>
-      <div>username</div>
+      <div>Username</div>
       <input ng-model="username" class="form-control" type="text"></input>
-      <div>password</div>
+      <div>Password</div>
       <input ng-model="password" class="form-control" type="password"></input>
       <input type="submit" id="submit-button" value="Submit"></input>
       <div id="error-message">{{errorMessage}}</div>

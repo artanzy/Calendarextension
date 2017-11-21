@@ -5,16 +5,14 @@
     <title>Hello World!</title>
 </head>
 <body ng-controller="roomsController" bgcolor="white">
-    <button id="toggle_button">Toggle</button>
+    <button id="toggle_button" ng-click="toggle()">Toggle</button>
     <div class="user-wrapper">
       <div class="user-name">{{username}}</div>
       <button ng-click="logout()" id="logout_button">Logout</button>
     </div>
     <div class="time-date">
-        <p class="col-xs-3" id="startDate"></p>
-        <p class="col-xs-3" id="startTime"></p>
-        <p class="col-xs-3" id="endTime"></p>
-        <p class="col-xs-3" id="endDate"></p>
+        <p class="col-xs-6" id="startTime">{{startTime}}</p>
+        <p class="col-xs-6" id="endTime">{{endTime}}</p>
     </div>
     <div class="search-header row">
     	  <label class="col-xs-11 filter-title">Search By Room Name</label>
@@ -33,7 +31,7 @@
                         <div class="room-detail-side">
                             <div class="icon"><i class="glyph-icon icon-typicons-location-outline"></i></div><p>Building : {{room.buildingName}}</p>
                             <div class="icon"><i class="glyph-icon icon-iconic-layers"></i></div><p> Floor : {{room.floor}} </p>
-                            <div class="icon"><i class="glyph-icon icon-iconic-person"></i></div><p>Capacity : {{room.roomCapacity}} People</p>
+                            <div class="icon"><i class="glyph-icon icon-iconic-user"></i></div><p>Capacity : {{room.roomCapacity}} People</p>
                         </div>
                         <div class="room-amenities col-xs-6">
                             <span class="primary-color">Amenities : </span>

@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(function(msg, sender){
-    console.log(msg);
+    // console.log(msg);
     if(msg == "toggle"){
         toggle();
     }
@@ -7,26 +7,64 @@ chrome.runtime.onMessage.addListener(function(msg, sender){
 
 function toggle(){
     if(document.getElementById("myOwnCustomToolbar12345").style.width == "0px"){
-        console.log(document.getElementById("myOwnCustomToolbar12345").style.width);
+        // console.log(document.getElementById("myOwnCustomToolbar12345").style.width);
         document.getElementById("myOwnCustomToolbar12345").style.width="550px";
         document.getElementById("myOwnCustomToolbar12345").style.borderWidth="1px";
     }
     else{
-        console.log(document.getElementById("myOwnCustomToolbar12345").style.width);
+        // console.log(document.getElementById("myOwnCustomToolbar12345").style.width);
         document.getElementById("myOwnCustomToolbar12345").style.width="0px";
         document.getElementById("myOwnCustomToolbar12345").style.borderWidth="0px";
     }
 }
 
+var startDate = "";
+var startYear = "";
+var startMonth = "";
+var startDay = "";
+var startTime = "";
+var startHour = "";
+var startMin = "";
+var endDate = "";
+var endYear = "";
+var endMonth = "";
+var endDay = "";
+var endTime = "";
+var endHour = "";
+var endMin = "";
+
 setInterval(function sendValueMessages(){
     // console.log($("input[id$='-sd']").val());
-    chrome.runtime.sendMessage({method: "startDate",param:$("input[id$='-sd']").val()});
-    // console.log($("input[id$='-st']").val());
-    chrome.runtime.sendMessage({method: "startTime",param:$("input[id$='-st']").val()});
+  if($("input[id$='-sd']").val() !== undefined){
+    //init startTime
+    startDate = $("input[id$='-sd']").val().split('/');
+    startYear = startDate[2];
+    startMonth = startDate[0];
+    startDay = startDate[1];
+    startTime = $("input[id$='-st']").val().split(':');
+    startHour = parseInt(startTime[0]);
+    if(startTime[1].substring(2) == "pm") startHour += 12;
+    if(startMonth < 10) startMonth = "0" + startMonth;
+    if(startDay < 10) startDay = "0" + startDay;
+    if(startHour < 10) startHour = "0" + startHour;
+    startMin = startTime[1].substring(0,2) + "00";
+    //init endTime
+    endDate = $("input[id$='-ed']").val().split('/');
+    endYear = endDate[2];
+    endMonth = endDate[0];
+    endDay = endDate[1];
+    endTime = $("input[id$='-et']").val().split(':');
+    endHour = parseInt(endTime[0]);
+    if(endTime[1].substring(2) == "pm") endHour += 12;
+    if(endMonth < 10) endMonth = "0" + endMonth;
+    if(endDay < 10) endDay = "0" + endDay;
+    if(endHour < 10) endHour = "0" + endHour;
+    endMin = endTime[1].substring(0,2) + "00";
+    //send Message
+    chrome.runtime.sendMessage({method: "startTime",param: startYear+startMonth+startDay+startHour+startMin});
     // console.log($("input[id$='-et']").val());
-    chrome.runtime.sendMessage({method: "endTime",param:$("input[id$='-et']").val()});
-    // console.log($("input[id$='-ed']").val());
-    chrome.runtime.sendMessage({method: "endDate",param:$("input[id$='-ed']").val()});
+    chrome.runtime.sendMessage({method: "endTime",param: endYear+endMonth+endDay+endHour+endMin});
+  }
 },500);
 
 

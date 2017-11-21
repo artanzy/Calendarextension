@@ -7,6 +7,9 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     $scope.username = "";
     $scope.password = "";
     $scope.errorMessage = "";
+    $scope.startTime = "";
+    $scope.endTime = "";
+
 
     $scope.getRooms = function(){
         roomServices.getRooms().then(function(response){
@@ -32,7 +35,6 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         roomServices.postLogin($scope).success(function(response){
             console.log(response);
             $cookies['token'] = response;
-            console.log($location.path());
             window.location.href = "#/home";
         }).error(function(error){
             $scope.errorMessage = "login failed wrong username or password";
@@ -43,5 +45,31 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         $cookies['token'] = undefined;
         window.location.href = "#/login";
     }
+
+    $scope.toggle = function(){
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+            chrome.tabs.sendMessage(tabs[0].id,"toggle");
+        });
+    }
+
+      chrome.runtime.onMessage.addListener(function(msg, sender){
+          // console.log(msg);
+          if(msg.param === null){
+          //debugging
+          }
+          else if(msg.method == "startTime"){
+              $scope.$apply(function(){
+                  $scope.startTime = msg.param;
+              });
+              // console.log($scope.startTime);
+          }
+          else if(msg.method == "endTime"){
+              $scope.$apply(function(){
+                  $scope.endTime = msg.param;
+              });
+              // console.log($scope.endTime);
+          }
+      });
+
 
 });
