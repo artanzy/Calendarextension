@@ -43,7 +43,7 @@ setInterval(function sendValueMessages(){
     startDay = startDate[1];
     startTime = $("input[id$='-st']").val().split(':');
     startHour = parseInt(startTime[0]);
-    if(startTime[1].substring(2) == "pm") startHour += 12;
+    if(startTime[1].substring(2) == "pm" && startHour != 0) startHour += 12;
     if(startMonth < 10) startMonth = "0" + startMonth;
     if(startDay < 10) startDay = "0" + startDay;
     if(startHour < 10) startHour = "0" + startHour;
@@ -55,14 +55,13 @@ setInterval(function sendValueMessages(){
     endDay = endDate[1];
     endTime = $("input[id$='-et']").val().split(':');
     endHour = parseInt(endTime[0]);
-    if(endTime[1].substring(2) == "pm") endHour += 12;
+    if(endTime[1].substring(2) == "pm" && endHour != 0) endHour += 12;
     if(endMonth < 10) endMonth = "0" + endMonth;
     if(endDay < 10) endDay = "0" + endDay;
     if(endHour < 10) endHour = "0" + endHour;
     endMin = endTime[1].substring(0,2) + "00";
     //send Message
     chrome.runtime.sendMessage({method: "startTime",param: startYear+startMonth+startDay+startHour+startMin});
-    // console.log($("input[id$='-et']").val());
     chrome.runtime.sendMessage({method: "endTime",param: endYear+endMonth+endDay+endHour+endMin});
   }
 },500);

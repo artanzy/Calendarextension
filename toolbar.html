@@ -15,10 +15,26 @@
         <p class="col-xs-6" id="endTime">{{endTime}}</p>
     </div>
     <div class="search-header row">
-    	  <label class="col-xs-11 filter-title">Search By Room Name</label>
+    	  <label class="col-xs-11">Search By Room Name</label>
     	  <div class="search-input-wrapper col-xs-11">
     	      <input type="text" ng-model="search.roomName" class="form-control search-label" placeholder="Search">
     	  </div>
+        <div class="building-container">
+        <label class="col-xs-3 filter-title"><i class="glyph-icon icon-typicons-location-outline primary-color"></i> Building</label>
+            <div class="col-xs-8">
+                <select class="form-control" ng-model="buildingSelected" data-ng-options="building.name for building in filter.buildings" ng-change="changeCapacity(buildingSelected)">
+                  <option value="">Select Building</option>
+                </select>
+            </div>
+        </div>
+        <div class="floor-container">
+        <label class="col-xs-3 filter-title"><i class="glyph-icon icon-iconic-layers primary-color"></i> Floor</label>
+            <div class="col-xs-8">
+                <select class="form-control" ng-model="floorSelected" data-ng-options="floor for floor in buildingSelected.floorList" ng-change="changeCapacity(buildingSelected)">
+                  <option value="">Select Floor</option>
+                </select>
+            </div>
+        </div>
     </div>
     <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" ng-repeat="room in roomsList | filter: search">
             <div class="card-box row" >
@@ -33,9 +49,9 @@
                             <div class="icon"><i class="glyph-icon icon-iconic-layers"></i></div><p> Floor : {{room.floor}} </p>
                             <div class="icon"><i class="glyph-icon icon-iconic-user"></i></div><p>Capacity : {{room.roomCapacity}} People</p>
                         </div>
-                        <div class="room-amenities col-xs-6">
+                        <div class="room-amenities">
                             <span class="primary-color">Amenities : </span>
-                            <div class="amenities-element" ng-repeat="element in room.amenities"><div><span>{{element}}</span></div></div>
+                            <div class="amenities-element" ng-repeat="element in room.amenities"><div><span class="element">{{element}}</span></div></div>
                         </div>
                     </div>
                 </div>

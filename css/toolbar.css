@@ -107,3 +107,38 @@
 .time-date p {
   color: black;
 }
+
+.room-amenities span {
+  float: left;
+}
+
+.element {
+  margin-left: 5px;
+}
+
+.building-container label{
+  padding-top: 10px;
+}
+
+.building-container div{
+  padding-top: 10px;
+  margin-left: -10px;
+}
+
+.floor-container label{
+  padding-top: 10px;
+}
+
+.floor-container div{
+  padding-top: 10px;
+  margin-left: -10px;
+}
+
+.filter-title {
+  padding-left: 20px;
+}
+
+.filter-title i {
+  margin-right: 10px;
+  color: #233A76;
+}
