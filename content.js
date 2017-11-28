@@ -1,14 +1,18 @@
 chrome.runtime.onMessage.addListener(function(msg, sender){
-    // console.log(msg);
+     console.log(msg);
     if(msg == "toggle"){
         toggle();
+    }
+    else if(msg.method == "selectRoom"){
+        console.log($("input[id^='\:2'].textinput").val());
+        $("input[id^='\:2'].textinput").val(msg.param);
     }
 });
 
 function toggle(){
     if(document.getElementById("myOwnCustomToolbar12345").style.width == "0px"){
         // console.log(document.getElementById("myOwnCustomToolbar12345").style.width);
-        document.getElementById("myOwnCustomToolbar12345").style.width="550px";
+        document.getElementById("myOwnCustomToolbar12345").style.width="520px";
         document.getElementById("myOwnCustomToolbar12345").style.borderWidth="1px";
     }
     else{
@@ -43,7 +47,8 @@ setInterval(function sendValueMessages(){
     startDay = startDate[1];
     startTime = $("input[id$='-st']").val().split(':');
     startHour = parseInt(startTime[0]);
-    if(startTime[1].substring(2) == "pm" && startHour != 0) startHour += 12;
+    if(startTime[1].substring(2) == "pm" && startHour != 0 && startHour != 12) startHour += 12;
+    if(startTime[1].substring(2) == "am" && startHour == 12) startHour -= 12;
     if(startMonth < 10) startMonth = "0" + startMonth;
     if(startDay < 10) startDay = "0" + startDay;
     if(startHour < 10) startHour = "0" + startHour;
@@ -55,7 +60,8 @@ setInterval(function sendValueMessages(){
     endDay = endDate[1];
     endTime = $("input[id$='-et']").val().split(':');
     endHour = parseInt(endTime[0]);
-    if(endTime[1].substring(2) == "pm" && endHour != 0) endHour += 12;
+    if(endTime[1].substring(2) == "pm" && endHour != 0 && endHour != 12) endHour += 12;
+    if(endTime[1].substring(2) == "am" && endHour == 12) endHour -= 12;
     if(endMonth < 10) endMonth = "0" + endMonth;
     if(endDay < 10) endDay = "0" + endDay;
     if(endHour < 10) endHour = "0" + endHour;

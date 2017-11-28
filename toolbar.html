@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
 </head>
-<body ng-controller="roomsController" bgcolor="white">
+<body id="mainBody" ng-controller="roomsController" bgcolor="white">
     <button id="toggle_button" ng-click="toggle()">Toggle</button>
     <div class="user-wrapper">
       <div class="user-name">{{username}}</div>
@@ -22,7 +22,7 @@
         <div class="building-container">
         <label class="col-xs-3 filter-title"><i class="glyph-icon icon-typicons-location-outline primary-color"></i> Building</label>
             <div class="col-xs-8">
-                <select class="form-control" ng-model="buildingSelected" data-ng-options="building.name for building in filter.buildings" ng-change="changeCapacity(buildingSelected)">
+                <select class="form-control" ng-model="buildingSelected" data-ng-options="room.buildingName for room in filter.room" ng-change="changeCapacity(buildingSelected)">
                   <option value="">Select Building</option>
                 </select>
             </div>
@@ -37,12 +37,12 @@
         </div>
     </div>
     <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" ng-repeat="room in roomsList | filter: search">
-            <div class="card-box row" >
+            <div class="card-box row" ng-click="selectRoom(room)" >
                 <div class="room-image-wrapper col-xs-6">
                     <img class="img-rounded" src={{room.roomImage}}></img>
                 </div>
                 <div class="room-content col-xs-6">
-                    <div class="room-name">{{room.roomName}}</div>
+                    <div class="room-name" ng-model="roomName">{{room.roomName}}</div>
                     <div class="row room-description">
                         <div class="room-detail-side">
                             <div class="icon"><i class="glyph-icon icon-typicons-location-outline"></i></div><p>Building : {{room.buildingName}}</p>
