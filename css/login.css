@@ -3,6 +3,10 @@ body{
   background-size: cover;
 }
 
+#mainBody{
+  background-color: white;
+}
+
 #input-field-wrapper{
   position: absolute;
   display: inline-block;

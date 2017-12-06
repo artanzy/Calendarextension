@@ -2,7 +2,7 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     console.log("Roomcontroller called");
     $scope.nameFilter = null;
     $scope.roomsList = [];
-    $scope.roomName = "";
+    $scope.selected = -1;
     $scope.username = "";
     $scope.password = "";
     $scope.errorMessage = "";
@@ -13,7 +13,6 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
 
     $scope.checkCookies = function(){
         console.log("checkCookies");
-        getRooms();
         if($cookies['token'] != null && $cookies['token'] != undefined && $cookies['token'] != ""){
             console.log($cookies['token']);
             console.log("already have cookies");
@@ -32,6 +31,8 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         });
     }
 
+    setInterval($scope.getRooms,60000);
+
     $scope.login = function(){
         roomServices.postLogin($scope).success(function(response){
             console.log(response);
@@ -49,9 +50,14 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     }
 
     $scope.selectRoom = function(room){
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-          chrome.tabs.sendMessage(tabs[0].id,{method: "selectRoom", param: room.roomName+", "+room.buildingName+", "+room.floor+" Floor."});
-      });
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+            chrome.tabs.sendMessage(tabs[0].id,{method: "selectRoom", param: room.roomName+", "+room.buildingName+", "+room.floor+" Floor."});
+        });
+        $scope.active($scope.roomsList.indexOf(room));
+    }
+
+    $scope.active = function(index){
+        $scope.selected = index;
     }
 
     $scope.toggle = function(){

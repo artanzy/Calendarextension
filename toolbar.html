@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link rel="stylesheet" href="/css/toolbar.css" />
 </head>
 <body id="mainBody" ng-controller="roomsController" bgcolor="white">
     <button id="toggle_button" ng-click="toggle()">Toggle</button>
@@ -20,15 +21,15 @@
     	      <input type="text" ng-model="search.roomName" class="form-control search-label" placeholder="Search">
     	  </div>
         <div class="building-container">
-        <label class="col-xs-3 filter-title"><i class="glyph-icon icon-typicons-location-outline primary-color"></i> Building</label>
+        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-typicons-location-outline primary-color"></span> Building</label>
             <div class="col-xs-8">
-                <select class="form-control" ng-model="buildingSelected" data-ng-options="room.buildingName for room in filter.room" ng-change="changeCapacity(buildingSelected)">
+                <select class="form-control" ng-model="buildingSelected" data-ng-options="room.buildingName for room in roomsList" ng-change="changeCapacity(buildingSelected)">
                   <option value="">Select Building</option>
                 </select>
             </div>
         </div>
         <div class="floor-container">
-        <label class="col-xs-3 filter-title"><i class="glyph-icon icon-iconic-layers primary-color"></i> Floor</label>
+        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-iconic-layers primary-color"></span> Floor</label>
             <div class="col-xs-8">
                 <select class="form-control" ng-model="floorSelected" data-ng-options="floor for floor in buildingSelected.floorList" ng-change="changeCapacity(buildingSelected)">
                   <option value="">Select Floor</option>
@@ -36,21 +37,21 @@
             </div>
         </div>
     </div>
-    <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" ng-repeat="room in roomsList | filter: search">
-            <div class="card-box row" ng-click="selectRoom(room)" >
+    <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" tabindex="-1" ng-repeat="room in roomsList | filter: search | filter: {buildingName : buildingSelected}" ng-click="selectRoom(room)" ng-class = "{active : $index == selected}">
+            <div class="card-box row" >
                 <div class="room-image-wrapper col-xs-6">
-                    <img class="img-rounded" src={{room.roomImage}}></img>
+                    <img class="img-rounded" ng-src="{{room.roomImage}}" == "null" || src="/assets/images/no_image.png"></img>
                 </div>
                 <div class="room-content col-xs-6">
-                    <div class="room-name" ng-model="roomName">{{room.roomName}}</div>
+                    <div class="room-name">{{room.roomName}}</div>
                     <div class="row room-description">
                         <div class="room-detail-side">
-                            <div class="icon"><i class="glyph-icon icon-typicons-location-outline"></i></div><p>Building : {{room.buildingName}}</p>
-                            <div class="icon"><i class="glyph-icon icon-iconic-layers"></i></div><p> Floor : {{room.floor}} </p>
-                            <div class="icon"><i class="glyph-icon icon-iconic-user"></i></div><p>Capacity : {{room.roomCapacity}} People</p>
+                            <div class="icon"><span class="glyph-icon icon-typicons-location-outline"></span></div><p> Building : {{room.buildingName}}</p>
+                            <div class="icon"><span class="glyph-icon icon-iconic-layers"></span></div><p> Floor : {{room.floor}} </p>
+                            <div class="icon"><span class="glyph-icon icon-iconic-user"></span></div><p> Capacity : {{room.roomCapacity}} People</p>
                         </div>
                         <div class="room-amenities">
-                            <span class="primary-color">Amenities : </span>
+                            <span class="primary-color"> Amenities : </span>
                             <div class="amenities-element" ng-repeat="element in room.amenities"><div><span class="element">{{element}}</span></div></div>
                         </div>
                     </div>
