@@ -2,6 +2,7 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     console.log("Roomcontroller called");
     $scope.nameFilter = null;
     $scope.roomsList = [];
+    $scope.filterList = [];
     $scope.selected = -1;
     $scope.username = "";
     $scope.password = "";
@@ -10,6 +11,9 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     $scope.endTime = "";
     $scope.oldStartTime = "";
     $scope.oldEndTime = "";
+    $scope.filter = [];
+    $scope.amenitiesSelectedList = [];
+    $scope.amenitiesList = [];
 
     $scope.checkCookies = function(){
         console.log("checkCookies");
@@ -24,6 +28,13 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         roomServices.getRooms($scope,$cookies).then(function(response){
           console.log("getRoom");
           $scope.roomsList = response.data.accessibleRoom;
+          $scope.filterList = response.data.filterList;
+          $scope.amenitiesList = [];
+          for(i in $scope.filterList.amenities){
+              var element = $scope.filterList.amenities[i];
+              $scope.amenitiesList.push({name : element, selected : false});
+          }
+          console.log($scope.amenitiesList);
           console.log($scope.roomsList);
         }, function (error) {
           console.log("Unable to load data");
@@ -67,7 +78,6 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     }
 
     chrome.runtime.onMessage.addListener(function(msg, sender){
-        // console.log(msg);
         if(msg.param === null){
         //debugging
         }
@@ -79,7 +89,6 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
                 $scope.oldStartTime = $scope.startTime;
             }
           });
-          // console.log($scope.startTime);
         }
         else if(msg.method == "endTime"){
             $scope.$apply(function(){
@@ -89,10 +98,40 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
                 $scope.oldEndTime = $scope.endTime;
             }
           });
-          // console.log($scope.endTime);
         }
-
     });
 
+    $scope.checkamenitiesSelected = function(){
+        for(i in $scope.amenitiesList){
+            console.log($scope.amenitiesList[i].selected);
+            if($scope.amenitiesList[i].selected && $scope.amenitiesSelectedList.indexOf($scope.amenitiesList[i]) == -1){
+                $scope.amenitiesSelectedList.push($scope.amenitiesList[i].name);
+            }
+        }
+    }
+
+    $scope.searchFilter = function(item){
+        var filtered = false;
+        $scope.amenitiesSelectedList = [];
+        $scope.checkamenitiesSelected();
+        console.log($scope.amenitiesSelectedList);
+          if($scope.filter.roomNameSearch === undefined || item.roomName.toUpperCase().indexOf($scope.filter.roomNameSearch.toUpperCase()) >= 0) {
+              if(!$scope.filter.buildingSelected || item.buildingName == $scope.filter.buildingSelected.name) {
+                 if(!$scope.filter.floorSelected || item.floor == $scope.filter.floorSelected){
+                    if(!$scope.filter.capacitySelected || item.roomCapacity > parseInt($scope.filter.capacitySelected.split('-')[0])){
+                      for (j in $scope.amenitiesSelectedList) {
+                        if (item.amenities.indexOf($scope.amenitiesSelectedList[j]) == -1) {
+                          console.log("in");
+                          filtered = false;
+                          return filtered;
+                        }
+                      }
+                      filtered = true;
+                    }
+                  }
+               }
+           }
+        return filtered;
+    };
 
 });

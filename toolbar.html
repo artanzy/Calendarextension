@@ -11,19 +11,19 @@
       <div class="user-name">{{username}}</div>
       <button ng-click="logout()" id="logout_button">Logout</button>
     </div>
-    <div class="time-date">
+    <!-- <div class="time-date">
         <p class="col-xs-6" id="startTime">{{startTime}}</p>
         <p class="col-xs-6" id="endTime">{{endTime}}</p>
-    </div>
+    </div> -->
     <div class="search-header row">
     	  <label class="col-xs-11">Search By Room Name</label>
     	  <div class="search-input-wrapper col-xs-11">
-    	      <input type="text" ng-model="search.roomName" class="form-control search-label" placeholder="Search">
+    	      <input type="text" ng-model="filter.roomNameSearch" class="form-control search-label" placeholder="Search">
     	  </div>
         <div class="building-container">
         <label class="col-xs-3 filter-title"><span class="glyph-icon icon-typicons-location-outline primary-color"></span> Building</label>
             <div class="col-xs-8">
-                <select class="form-control" ng-model="buildingSelected" data-ng-options="room.buildingName for room in roomsList" ng-change="changeCapacity(buildingSelected)">
+                <select class="form-control" ng-model="filter.buildingSelected" data-ng-options="building.name for building in filterList.buildings">
                   <option value="">Select Building</option>
                 </select>
             </div>
@@ -31,13 +31,38 @@
         <div class="floor-container">
         <label class="col-xs-3 filter-title"><span class="glyph-icon icon-iconic-layers primary-color"></span> Floor</label>
             <div class="col-xs-8">
-                <select class="form-control" ng-model="floorSelected" data-ng-options="floor for floor in buildingSelected.floorList" ng-change="changeCapacity(buildingSelected)">
+                <select class="form-control" ng-model="filter.floorSelected" data-ng-options="floor for floor in filter.buildingSelected.floorList">
                   <option value="">Select Floor</option>
                 </select>
             </div>
         </div>
+        <div class="capacity-container">
+        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-iconic-user primary-color"></span> Capacity</label>
+            <div class="col-xs-8">
+                <select class="form-control" ng-model="filter.capacitySelected" data-ng-options="capacity for capacity in filterList.capacityList">
+                  <option value="">Select Capacity</option>
+                </select>
+            </div>
+        </div>
+        <div id="amenities-box" class="content-box-element">
+          <div class="amenities-box-wrapper">
+          <label class="col-xs-10 control-label">Amenities</label>
+          <div class="col-xs-12">
+            <div class="row">
+              <div class="{{amenity.name.length >= 14 ? 'col-xs-4': 'col-xs-3';}}" ng-repeat="amenity in amenitiesList">
+                <div class="checkbox checkbox-primary">
+                  <label>
+                    <input type="checkbox" ng-model="amenity.selected" >
+                    {{amenity.name}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
     </div>
-    <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" tabindex="-1" ng-repeat="room in roomsList | filter: search | filter: {buildingName : buildingSelected}" ng-click="selectRoom(room)" ng-class = "{active : $index == selected}">
+    <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" tabindex="-1" ng-repeat="room in roomsList | filter: searchFilter" ng-click="selectRoom(room)" ng-class = "{active : $index == selected}">
             <div class="card-box row" >
                 <div class="room-image-wrapper col-xs-6">
                     <img class="img-rounded" ng-src="{{room.roomImage}}" == "null" || src="/assets/images/no_image.png"></img>

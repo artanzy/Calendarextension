@@ -141,6 +141,19 @@
   margin-left: -10px;
 }
 
+.capacity-container label{
+  padding-top: 10px;
+}
+
+.capacity-container span{
+  margin-left: 2px;
+}
+
+.capacity-container div{
+  padding-top: 10px;
+  margin-left: -10px;
+}
+
 .filter-title {
   padding-left: 20px;
 }
@@ -148,4 +161,12 @@
 .filter-title span {
   margin-right: 10px;
   color: #233A76;
+}
+
+#amenities-box {
+  margin-left: 8px;
+}
+
+.content-box-element .control-label{
+  padding-top: 15px;
 }
