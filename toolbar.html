@@ -6,22 +6,27 @@
     <link rel="stylesheet" href="/css/toolbar.css" />
 </head>
 <body id="mainBody" ng-controller="roomsController" bgcolor="white">
-    <button id="toggle_button" ng-click="toggle()">Toggle</button>
-    <div class="user-wrapper">
-      <div class="user-name">{{username}}</div>
+    <div class="titlebar">
+      <button id="toggle_button" ng-click="toggle()"><img src="/assets/images/toggle_close.png" /></button>
       <button ng-click="logout()" id="logout_button">Logout</button>
     </div>
-    <!-- <div class="time-date">
-        <p class="col-xs-6" id="startTime">{{startTime}}</p>
-        <p class="col-xs-6" id="endTime">{{endTime}}</p>
-    </div> -->
     <div class="search-header row">
-    	  <label class="col-xs-11">Search By Room Name</label>
+    	  <h4>Search By Room Name</h4>
     	  <div class="search-input-wrapper col-xs-11">
     	      <input type="text" ng-model="filter.roomNameSearch" class="form-control search-label" placeholder="Search">
     	  </div>
+        <div class="filter-box col-xs-11">
+        <div class="active-box">
+          <h4>Filter
+          <a ng-click="filterAction()" class="icon-separator toggle-button">
+             <span id="activeFilterPlus" class="glyph-icon icon-iconic-plus" ng-if="!activeFilter"></span>
+             <span id="activeFilterMinus" class="glyph-icon icon-iconic-minus" ng-if="activeFilter"></span>
+          </a>
+          </h4>
+        </div>
+        <form ng-if="activeFilter" class="col-xs-12 filter-wrapper">
         <div class="building-container">
-        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-typicons-location-outline primary-color"></span> Building</label>
+        <label class="col-xs-4 filter-title"><span class="glyph-icon icon-typicons-location-outline primary-color"></span> Building</label>
             <div class="col-xs-8">
                 <select class="form-control" ng-model="filter.buildingSelected" data-ng-options="building.name for building in filterList.buildings">
                   <option value="">Select Building</option>
@@ -29,7 +34,7 @@
             </div>
         </div>
         <div class="floor-container">
-        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-iconic-layers primary-color"></span> Floor</label>
+        <label class="col-xs-4 filter-title"><span class="glyph-icon icon-iconic-layers primary-color"></span> Floor</label>
             <div class="col-xs-8">
                 <select class="form-control" ng-model="filter.floorSelected" data-ng-options="floor for floor in filter.buildingSelected.floorList">
                   <option value="">Select Floor</option>
@@ -37,7 +42,7 @@
             </div>
         </div>
         <div class="capacity-container">
-        <label class="col-xs-3 filter-title"><span class="glyph-icon icon-iconic-user primary-color"></span> Capacity</label>
+        <label class="col-xs-4 filter-title"><span class="glyph-icon icon-iconic-user primary-color"></span> Capacity</label>
             <div class="col-xs-8">
                 <select class="form-control" ng-model="filter.capacitySelected" data-ng-options="capacity for capacity in filterList.capacityList">
                   <option value="">Select Capacity</option>
@@ -61,6 +66,11 @@
           </div>
         </div>
         </div>
+      </form>
+    </div>
+    </div>
+    <div class="panel-heading">
+      <h2 class="panel-title"> Room(s) Available at ({{interfaceStartTime}} - {{interfaceEndTime}})</h2>
     </div>
     <div ng-init="getRooms" class="panel-body room-cardbox-wrapper" tabindex="-1" ng-repeat="room in roomsList | filter: searchFilter" ng-click="selectRoom(room)" ng-class = "{active : $index == selected}">
             <div class="card-box row" >

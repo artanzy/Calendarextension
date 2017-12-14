@@ -28,6 +28,7 @@
   "web_accessible_resources": [
       "content.js",
       "index.html",
-      "style.css"
+      "style.css",
+      "/assets/images/toggle_open.png"
   ]
 }

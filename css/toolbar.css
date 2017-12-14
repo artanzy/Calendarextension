@@ -1,15 +1,29 @@
-.user-wrapper{
-  float: right;
+#toggle_button{
+  border-width: 0px;
+  background-color: #2F4F4F;
+}
+
+#toggle_button img{
+  width : 40px;
+  height : 40px;
 }
 
 #logout_button{
   background-color: #8B0000;
   color: white;
+  float: right;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+
+.titlebar{
+  background-color: #2F4F4F;
 }
 
 .search-header {
+  margin-top: 7px;
   margin-bottom: 10px;
-  margin-left: 10px;
+  margin-left: 25px;
 }
 
 .search-header label {
@@ -124,7 +138,7 @@
 }
 
 .building-container label{
-  padding-top: 10px;
+  margin-top: 15px;
 }
 
 .building-container div{
@@ -133,7 +147,7 @@
 }
 
 .floor-container label{
-  padding-top: 10px;
+  margin-top: 15px;
 }
 
 .floor-container div{
@@ -142,7 +156,7 @@
 }
 
 .capacity-container label{
-  padding-top: 10px;
+  margin-top: 15px;
 }
 
 .capacity-container span{
@@ -169,4 +183,33 @@
 
 .content-box-element .control-label{
   padding-top: 15px;
+}
+
+.panel-heading {
+  border-top: 1px;
+}
+
+.active-box {
+  margin-top: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  border-radius: 3px;
+}
+
+.active-box h4 {
+  margin-left: 10px;
+}
+
+.active-box a{
+  float: right;
+  margin-right: 10px;
+}
+
+.filter-wrapper{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  border-radius: 3px;
+  border-top: none;
 }

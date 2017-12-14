@@ -69,12 +69,15 @@ setInterval(function sendValueMessages(){
     //send Message
     chrome.runtime.sendMessage({method: "startTime",param: startYear+startMonth+startDay+startHour+startMin});
     chrome.runtime.sendMessage({method: "endTime",param: endYear+endMonth+endDay+endHour+endMin});
+    chrome.runtime.sendMessage({method: "interfaceStartTime",param: $("input[id$='-st']").val()});
+    chrome.runtime.sendMessage({method: "interfaceEndTime",param: $("input[id$='-et']").val()});
   }
 },500);
 
 
 var url = chrome.extension.getURL('index.html');
-var button = "<button id='myButton12345'>Toggle</button>"
+var imgurl = chrome.extension.getURL('/assets/images/toggle_open.png');
+var button = "<button id='myButton12345'><img src="+imgurl+" /></button>"
 var iframe = "<iframe id='myOwnCustomToolbar12345' src="+url+"></iframe>"
 
 $("#maincell").append(button);

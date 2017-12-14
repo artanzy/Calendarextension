@@ -9,11 +9,14 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
     $scope.errorMessage = "";
     $scope.startTime = "";
     $scope.endTime = "";
+    $scope.interfaceStartTime = "";
+    $scope.interfaceEndTime = "";
     $scope.oldStartTime = "";
     $scope.oldEndTime = "";
     $scope.filter = [];
     $scope.amenitiesSelectedList = [];
     $scope.amenitiesList = [];
+    $scope.activeFilter = false;
 
     $scope.checkCookies = function(){
         console.log("checkCookies");
@@ -71,6 +74,10 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         $scope.selected = index;
     }
 
+    $scope.filterAction = function() {
+        $scope.activeFilter = !$scope.activeFilter;
+    }
+
     $scope.toggle = function(){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
             chrome.tabs.sendMessage(tabs[0].id,"toggle");
@@ -99,11 +106,16 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
             }
           });
         }
+        else if(msg.method == "interfaceStartTime"){
+            $scope.interfaceStartTime = msg.param;
+        }
+        else if(msg.method == "interfaceEndTime"){
+            $scope.interfaceEndTime = msg.param;
+        }
     });
 
     $scope.checkamenitiesSelected = function(){
         for(i in $scope.amenitiesList){
-            console.log($scope.amenitiesList[i].selected);
             if($scope.amenitiesList[i].selected && $scope.amenitiesSelectedList.indexOf($scope.amenitiesList[i]) == -1){
                 $scope.amenitiesSelectedList.push($scope.amenitiesList[i].name);
             }
@@ -114,14 +126,12 @@ RoomManager.controller('roomsController', function($scope ,$mdDialog ,$mdToast ,
         var filtered = false;
         $scope.amenitiesSelectedList = [];
         $scope.checkamenitiesSelected();
-        console.log($scope.amenitiesSelectedList);
           if($scope.filter.roomNameSearch === undefined || item.roomName.toUpperCase().indexOf($scope.filter.roomNameSearch.toUpperCase()) >= 0) {
               if(!$scope.filter.buildingSelected || item.buildingName == $scope.filter.buildingSelected.name) {
                  if(!$scope.filter.floorSelected || item.floor == $scope.filter.floorSelected){
                     if(!$scope.filter.capacitySelected || item.roomCapacity > parseInt($scope.filter.capacitySelected.split('-')[0])){
                       for (j in $scope.amenitiesSelectedList) {
                         if (item.amenities.indexOf($scope.amenitiesSelectedList[j]) == -1) {
-                          console.log("in");
                           filtered = false;
                           return filtered;
                         }

@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="/css/login.css" />
   </head>
   <body id="loginBody" ng-controller="roomsController">
-    <button id="toggle_button" ng-click="toggle()">Toggle</button>
+    <button id="toggle_button" ng-click="toggle()"><img src="/assets/images/toggle_close.png" /></button>
     <form ng-submit="login()" class="col-xs-10" id="input-field-wrapper">
-    <h3>Login</h3>
+    <div class="col-xs-12 login-wrapper">
+    <h3 align="center">Login</h3>
       <div>Username</div>
-      <input ng-model="username" class="form-control" type="text"></input>
+      <input ng-model="username" class="col-xs-10 form-control" type="text"></input>
       <div>Password</div>
-      <input ng-model="password" class="form-control" type="password"></input>
+      <input ng-model="password" class="col-xs-10 form-control" type="password"></input>
       <input type="submit" id="submit-button" value="Submit"></input>
-      <div id="error-message">{{errorMessage}}</div>
+      <div align="center" id="error-message">{{errorMessage}}</div>
+    </div>
     </form>
   </body>
 </html>
